@@ -51,6 +51,8 @@ class MainActivity : AppCompatActivity() {
             if (radioGroup.checkedRadioButtonId != -1) {
                 val checkedRadioButtonId = radioGroup.checkedRadioButtonId
                 checkButton(findViewById(checkedRadioButtonId))
+                // change status of button
+                custom_button.setButtonStatus(ButtonState.Clicked)
             } else {
                 Toast.makeText(this, "Please select a file", Toast.LENGTH_SHORT).show()
             }
@@ -86,6 +88,8 @@ class MainActivity : AppCompatActivity() {
                     URL = "https://github.com/hdodenhof/CircleImageView/archive/refs/heads/master.zip"
                     name = "Circle"
                     download()
+
+
         }
 
         if (view.id == R.id.glide_btn){
@@ -110,6 +114,7 @@ class MainActivity : AppCompatActivity() {
             if (id == downloadID) {
                 notificationManager.sendNotification("Download Completed", applicationContext
                 ,"success",name)
+                custom_button.setButtonStatus(ButtonState.Completed)
             }
         }
     }
@@ -126,6 +131,7 @@ class MainActivity : AppCompatActivity() {
         val downloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
         downloadID =
             downloadManager.enqueue(request)// enqueue puts the download request in the queue.
+
 
     }
 
@@ -147,7 +153,6 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private var URL =
             "https://github.com/udacity/nd940-c3-advanced-android-programming-project-starter/archive/master.zip"
-
     }
 
 
