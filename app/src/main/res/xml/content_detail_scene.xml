@@ -9,6 +9,7 @@
         motion:duration="1000">
        <KeyFrameSet>
        </KeyFrameSet>
+        <OnSwipe motion:maxAcceleration="1.0599" />
     </Transition>
 
     <ConstraintSet android:id="@+id/start">
@@ -20,8 +21,48 @@
             android:layout_marginEnd="50dp"
             android:layout_marginStart="50dp"
             android:id="@+id/back_button" />
+        <Constraint
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="100dp"
+            android:id="@+id/status_text_view" />
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="200dp"
+            android:id="@+id/status_text_view" />
+        <Constraint
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            motion:layout_constraintTop_toTopOf="@id/status_text_view"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="200dp"
+            android:id="@+id/name_text_view" />
+        <Constraint
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="100dp"
+            motion:layout_constraintTop_toTopOf="@id/success_text_view"
+            android:layout_marginTop="200dp"
+            android:id="@+id/name_text" />
+        <Constraint
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="100dp"
+            motion:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="200dp"
+            android:id="@+id/success_text_view" />
     </ConstraintSet>
 </MotionScene>
