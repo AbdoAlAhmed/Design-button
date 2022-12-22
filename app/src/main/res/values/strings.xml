@@ -14,4 +14,7 @@
     <string name="circle_lib">Circle lib</string>
     <string name="glide_lib">Glide lib</string>
     <string name="picasso_lib">Picasso lib</string>
+    <string name="status">Status:</string>
+    <string name="success">success</string>
+    <string name="back">Back</string>
 </resources>
