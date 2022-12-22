@@ -68,6 +68,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:backgroundColor="@color/colorPrimary"
         app:foregroundColor="@color/colorAccent"
+        app:textColor="@color/white"
+        app:circleColor="@color/colorAccent"
+        app:progressColor="@color/colorPrimaryDark"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
