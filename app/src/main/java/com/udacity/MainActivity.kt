@@ -84,7 +84,7 @@ class MainActivity : AppCompatActivity() {
 //            }
 //        }
         if (view.id == R.id.circle_btn){
-            Toast.makeText(this, "Circle", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Wait ...", Toast.LENGTH_SHORT).show()
                     URL = "https://github.com/hdodenhof/CircleImageView/archive/refs/heads/master.zip"
                     name = "Circle"
                     download()
@@ -93,14 +93,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         if (view.id == R.id.glide_btn){
-            Toast.makeText(this, "Glide", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Wait ...", Toast.LENGTH_SHORT).show()
                     URL = "https://github.com/bumptech/glide/archive/refs/heads/master.zip"
                     name = "Glide"
                     download()
             }
 
         if (view.id == R.id.picasso_btn) {
-            Toast.makeText(this, "Picasso", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Wait ...", Toast.LENGTH_SHORT).show()
                     URL = "https://github.com/square/picasso/archive/refs/heads/master.zip"
                     name = "Picasso"
                     download()
@@ -128,6 +128,7 @@ class MainActivity : AppCompatActivity() {
                 .setAllowedOverRoaming(true)
                 .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)
 
+        custom_button.setButtonStatus(ButtonState.Loading)
         val downloadManager = getSystemService(DOWNLOAD_SERVICE) as DownloadManager
         downloadID =
             downloadManager.enqueue(request)// enqueue puts the download request in the queue.

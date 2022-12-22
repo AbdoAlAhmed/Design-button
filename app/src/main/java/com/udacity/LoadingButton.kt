@@ -24,21 +24,26 @@ class LoadingButton @JvmOverloads constructor(
     private val valueAnimator = ValueAnimator()
     private var backgroundColour: Int = 0
     private var foregroundColor: Int = 0
-
-
-    var buttonState: ButtonState by Delegates.observable<ButtonState>(ButtonState.Completed) { p, old, new ->
+    private var buttonText: String = "Click Me"
+    private var buttonState: ButtonState by Delegates.observable<ButtonState>(ButtonState.Completed) { p, old, new ->
         when (new) {
             ButtonState.Clicked -> {
-                animateCircle()
+                buttonText = "Downloading..."
+                animateButton()
             }
             ButtonState.Loading -> {
+                buttonText = "Loading..."
+                valueAnimator.cancel()
             }
             ButtonState.Completed -> {
-                valueAnimator.end()
+                buttonText = "Complete"
+                valueAnimator.cancel()
             }
-
         }
+        invalidate()
     }
+
+
 
 
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -53,10 +58,11 @@ class LoadingButton @JvmOverloads constructor(
 
     init {
         isClickable = true
-        val a = context.obtainStyledAttributes(attrs, R.styleable.LoadingButton, defStyleAttr, 0)
-        backgroundColour = a.getColor(R.styleable.LoadingButton_backgroundColor, 0)
-        foregroundColor = a.getColor(R.styleable.LoadingButton_foregroundColor, 0)
-        a.recycle()
+           context.withStyledAttributes(attrs, R.styleable.LoadingButton) {
+                backgroundColour = getColor(R.styleable.LoadingButton_backgroundColor, 0)
+                foregroundColor = getColor(R.styleable.LoadingButton_foregroundColor, 0)
+            }
+
     }
 
 
@@ -76,46 +82,37 @@ class LoadingButton @JvmOverloads constructor(
 
     }
 
-    // animate the circle to rotate around itself and the button to change color
-    private fun animateCircle() {
-        val propertyValuesHolder = PropertyValuesHolder.ofFloat("rotation", 0f, 360f)
-        valueAnimator.setValues(propertyValuesHolder)
-        valueAnimator.duration = 1000
-        valueAnimator.repeatCount = ValueAnimator.INFINITE
-        valueAnimator.interpolator = LinearInterpolator()
-        valueAnimator.addUpdateListener {
-            rotate = it.getAnimatedValue("rotation") as Float
-            invalidate()
+    private fun animateButton() {
+        valueAnimator.apply {
+            setValues(
+                PropertyValuesHolder.ofFloat("circle", 0f, 360f),
+                PropertyValuesHolder.ofFloat("button", 0f, 1f)
+            )
+            duration = 1000
+            interpolator = LinearInterpolator()
+            repeatCount = ValueAnimator.INFINITE
+            repeatMode = ValueAnimator.RESTART
+            addUpdateListener {
+                rotate = it.getAnimatedValue("circle") as Float
+                invalidate()
+            }
+            start()
         }
-        valueAnimator.start()
     }
-
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-
-        paint.color = ResourcesCompat.getColor(resources, R.color.colorPrimary, null)
-        canvas?.drawRect(0f, 0f, widthSize.toFloat(), heightSize.toFloat(), paint)
-
-        // Draw the text
-        paint.color = ResourcesCompat.getColor(resources, R.color.black, null)
+        canvas?.drawColor(backgroundColour)
         canvas?.drawText(
-            "Download",
+            buttonText,
             widthSize / 2f,
             heightSize / 2f + (paint.descent() - paint.ascent()) / 2 - paint.descent(),
             paint
         )
-
-        // Draw the circle and rotate it
-        paint.color = ResourcesCompat.getColor(resources, R.color.colorAccent, null)
-        canvas?.save()
-        canvas?.rotate(rotate, circle.centerX(), circle.centerY())
-        canvas?.drawArc(circle, 0f, 360f, true, paint)
-        canvas?.restore()
-
-
+        canvas?.drawArc(circle, rotate, 90f, true, paint)
 
     }
+
 
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
