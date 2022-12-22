@@ -48,6 +48,7 @@ class MainActivity : AppCompatActivity() {
 
         custom_button.setOnClickListener {
 
+
             checkButton()
 
         }
