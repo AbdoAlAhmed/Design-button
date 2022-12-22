@@ -12,6 +12,7 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -47,37 +48,58 @@ class MainActivity : AppCompatActivity() {
         )
 
         custom_button.setOnClickListener {
-
-
-            checkButton()
-
+            if (radioGroup.checkedRadioButtonId != -1) {
+                val checkedRadioButtonId = radioGroup.checkedRadioButtonId
+                checkButton(findViewById(checkedRadioButtonId))
+            } else {
+                Toast.makeText(this, "Please select a file", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
-    private fun checkButton() {
-        radioGroup.setOnCheckedChangeListener { radioGroup, i ->
-            val radio = findViewById<RadioButton>(i)
-            when(radio){
-                glide_btn ->{
-                    Toast.makeText(this, "Glide", Toast.LENGTH_SHORT).show()
-                    URL = "https://github.com/bumptech/glide/archive/refs/heads/master.zip"
-                    name = "Glide"
-                    download()
-                }
-                picasso_btn ->{
-                    Toast.makeText(this, "Picasso", Toast.LENGTH_SHORT).show()
-                    URL = "https://github.com/square/picasso/archive/refs/heads/master.zip"
-                    name = "Picasso"
-                    download()
-                }
-                circle_btn ->{
-                    Toast.makeText(this, "Circle", Toast.LENGTH_SHORT).show()
+    private fun checkButton(view: View) {
+//        radioGroup.setOnCheckedChangeListener { radioGroup, i ->
+//            val radio = findViewById<RadioButton>(i)
+//            when (radio.id) {
+//                R.id.glide_btn -> {
+//                    Toast.makeText(this, "Glide", Toast.LENGTH_SHORT).show()
+//                    URL = "https://github.com/bumptech/glide/archive/refs/heads/master.zip"
+//                    name = "Glide"
+//                    download()
+//                }
+//                R.id.picasso_btn -> {
+//                    Toast.makeText(this, "Picasso", Toast.LENGTH_SHORT).show()
+//                    URL = "https://github.com/square/picasso/archive/refs/heads/master.zip"
+//                    name = "Picasso"
+//                    download()
+//                }
+//                R.id.circle_btn -> {
+//                    Toast.makeText(this, "Circle", Toast.LENGTH_SHORT).show()
+//                    URL = "https://github.com/hdodenhof/CircleImageView/archive/refs/heads/master.zip"
+//                    name = "Circle"
+//                    download()
+//                }
+//            }
+//        }
+        if (view.id == R.id.circle_btn){
+            Toast.makeText(this, "Circle", Toast.LENGTH_SHORT).show()
                     URL = "https://github.com/hdodenhof/CircleImageView/archive/refs/heads/master.zip"
                     name = "Circle"
                     download()
-                }
+        }
 
+        if (view.id == R.id.glide_btn){
+            Toast.makeText(this, "Glide", Toast.LENGTH_SHORT).show()
+                    URL = "https://github.com/bumptech/glide/archive/refs/heads/master.zip"
+                    name = "Glide"
+                    download()
             }
+
+        if (view.id == R.id.picasso_btn) {
+            Toast.makeText(this, "Picasso", Toast.LENGTH_SHORT).show()
+                    URL = "https://github.com/square/picasso/archive/refs/heads/master.zip"
+                    name = "Picasso"
+                    download()
         }
     }
 
@@ -125,7 +147,6 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private var URL =
             "https://github.com/udacity/nd940-c3-advanced-android-programming-project-starter/archive/master.zip"
-        private const val CHANNEL_ID = "channelId"
 
     }
 
